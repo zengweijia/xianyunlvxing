@@ -19,21 +19,25 @@
             国内机票
           </nuxt-link>
         </el-row>
-        <div v-if="false">
+        <!-- 登录注册页 -->
+        <div v-if="!$store.state.user.userInfo.token">
           <nuxt-link to="/user/login">
             登录/注册
           </nuxt-link>
         </div>
+        <!-- 登录之后的布局 -->
         <div v-else>
           <el-dropdown>
             <span class="el-dropdown-link">
               <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" alt="">
-              咸鱼旅游
+              {{ $store.state.user.userInfo.user.nickname }}
               <i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item @click.native="handleLogout">
+                退出
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -42,7 +46,21 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  mounted () {
+    console.log('this.$store', this.$store)
+  },
+  methods: {
+    handleLogout () {
+      const { commit } = this.$store
+      commit('user/clearUserInfo')
+      this.$message({
+        message: '退出成功',
+        type: 'success'
+      })
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 .header {
