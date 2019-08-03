@@ -4,7 +4,6 @@
     <el-carousel
       :interval="5000"
       arrow="always"
-      type="card"
     >
       <el-carousel-item
         v-for="(item, index) in banners"
@@ -94,7 +93,7 @@ export default {
     this.$axios({
       url: '/scenics/banners'
     }).then((res) => {
-      console.log('!', this.$axios.defaults.baseURL)
+      // console.log('!', this.$axios.defaults.baseURL)
       const { data } = res.data
       this.banners = data
     })
