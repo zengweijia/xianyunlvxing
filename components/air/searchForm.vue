@@ -38,6 +38,7 @@
       <el-form-item label="出发时间">
         <!-- change 用户确认选择日期时触发 -->
         <el-date-picker
+          value-format="yyyy-MM-dd"
           v-model="form.departDate"
           type="date"
           placeholder="请选择日期"
