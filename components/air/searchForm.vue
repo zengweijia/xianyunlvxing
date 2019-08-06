@@ -38,8 +38,8 @@
       <el-form-item label="出发时间">
         <!-- change 用户确认选择日期时触发 -->
         <el-date-picker
-          value-format="yyyy-MM-dd"
           v-model="form.departDate"
+          value-format="yyyy-MM-dd"
           type="date"
           placeholder="请选择日期"
           style="width: 100%;"
@@ -91,6 +91,7 @@ export default {
     // value 是选中的值，cb是回调函数，接收要展示的列表
     queryDepartSearch(value, cb) {
       if (!value) {
+        // eslint-disable-next-line standard/no-callback-literal
         cb([])
         return
       }
@@ -144,28 +145,32 @@ export default {
     // 提交表单时触发
     handleSubmit() {
       if (!this.form.departCity) {
-          this.$alert('出发城市不能为空','提示', {
-            type: 'warning'
-          })
-          return
+        this.$alert('出发城市不能为空', '提示', {
+          type: 'warning'
+        })
+        return
       }
       if (!this.form.destCity) {
-          this.$alert('到达城市不能为空','提示', {
-            type: 'warning'
-          })
-          return
+        this.$alert('到达城市不能为空', '提示', {
+          type: 'warning'
+        })
+        return
       }
       if (!this.form.departDate) {
-          this.$alert('出发时间不能为空','提示', {
-            type: 'warning'
-          })
-          return
+        this.$alert('出发时间不能为空', '提示', {
+          type: 'warning'
+        })
+        return
       }
 
       this.$router.push({
         path: '/air/flights',
         query: this.form
       })
+      // 把数据添加到本地
+      const airs = JSON.parse(localStorage.getItem('airs') || '[]')
+      airs.push(this.form)
+      localStorage.setItem('airs', JSON.stringify(airs))
     }
   }
 }

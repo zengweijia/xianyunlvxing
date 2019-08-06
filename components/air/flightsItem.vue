@@ -51,7 +51,7 @@
               ￥{{ item.org_settle_price }}
             </el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini">
+              <el-button type="warning" size="mini" @click="handleChoose(data.id, item.seat_xid)">
                 选定
               </el-button>
               <p>剩余：{{ item.discount }}</p>
@@ -71,6 +71,7 @@ export default {
     data: {
       type: Object,
       // 默认是空数组
+      // eslint-disable-next-line vue/require-valid-default-prop
       default: {}
     }
   },
@@ -80,6 +81,17 @@ export default {
     }
   },
   methods: {
+    // 选择机票跳转订单页
+    // eslint-disable-next-line camelcase
+    handleChoose(id, seat_xid) {
+      this.$router.push({
+        path: `/air/order`,
+        query: {
+          seat_xid,
+          id
+        }
+      })
+    },
     // 控制推荐列表的展开收起
     handleShowRecommend() {
       this.showRecommend = !this.showRecommend
